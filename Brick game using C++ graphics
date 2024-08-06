@@ -1,0 +1,281 @@
+#include <conio.h>
+#include <dos.h>
+#include <graphics.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void outline() {
+    int u = 200;
+
+    // Storing Box Outline
+    rectangle(350, 150, 500, 450);
+
+    // Vertical Lines To Make Divisions
+    line(400, 150, 400, 450);
+    line(450, 150, 450, 450);
+
+    // Making Horizontal Line Using While Function
+    while (u <= 450) {
+        line(350, u, 500, u);
+        u = u + 50;
+    }
+
+    // Printing The Instruction On Screen
+    settextstyle(10, 0, 1);
+    outtextxy(10, 50, "FOR MOVE LEFT PRESS 'l'");
+    outtextxy(10, 100, "FOR MOVE RIGHT PRESS 'r'");
+    outtextxy(10, 150, "FOR MOVE MIDDLE PRESS 'm'");
+}
+
+int main() {
+    int gd = DETECT, gm;
+
+    // Initialize of gdriver with DETECT macros
+    initgraph(&gd, &gm, "C:\\turboc3\\bgi");
+
+    // Declaring & Initialising Variables
+    int a = 400, b = 25, c = 450, d = 75, x;
+    int left[10] = {0}, right[10] = {0}, mid[10] = {0};
+    int up = 5, low = 2, lb = 450, mb = 450, rb = 450;
+    int i = 0, j = 0, k = 0, score = 0, p;
+    char z, str[3];
+
+    // Calling outline() function
+    outline();
+
+    // Creating Infinite Loop To Make Continuous Use OF Game
+    while (1) {
+        // Creating & Naming The Brick Box
+        settextstyle(8, 0, 1);
+        outtextxy(400, 5, "Brick Box");
+        rectangle(a, b, c, d);
+
+        // Generating Random Color Number
+        x = (rand() % (up - low + 1)) + low;
+        setfillstyle(SOLID_FILL, x);
+        floodfill(a + 5, d - 5, 15);
+
+        // Getting Input To Move Bricks
+        z = getch();
+
+        // Operations For Place The Bricks In Left Side
+        if (z == 'l') {
+            settextstyle(8, 0, 1);
+            outtextxy(300, 5, "Left Sub-Box");
+            rectangle(a - 75, b, c - 75, d);
+            floodfill(a - 55, d - 5, 15);
+            delay(200);
+            setfillstyle(SOLID_FILL, BLACK);
+            floodfill(a - 55, d - 5, 15);
+            rectangle(a - 50, lb - 50, c - 50, lb);
+            setfillstyle(SOLID_FILL, x);
+            floodfill(a - 5, lb - 5, 15);
+            delay(200);
+
+            // Decreasing The Base Of Left Side
+            lb = lb - 50;
+
+            // Storing Corresponding Color In Left[] Array
+            left[i] = x;
+            i++;
+
+            // Process To Check Is There Any Matching In The Left Side By Upside Down
+            if (left[0] == left[1]) {
+                lb = 450;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a - 5, lb - 5, 15);
+                floodfill(a - 5, lb - 55, 15);
+                score = score + 10;
+                i = 0;
+                left[1] = 0;
+            } else if (left[1] == left[2]) {
+                lb = 400;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a - 5, lb - 5, 15);
+                floodfill(a - 5, lb - 55, 15);
+                score = score + 10;
+                i = 1;
+                left[2] = 0;
+            } else if (left[2] == left[3]) {
+                lb = 350;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a - 5, lb - 5, 15);
+                floodfill(a - 5, lb - 55, 15);
+                score = score + 10;
+                i = 2;
+                left[3] = 0;
+            } else if (left[3] == left[4]) {
+                lb = 300;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a - 5, lb - 5, 15);
+                floodfill(a - 5, lb - 55, 15);
+                score = score + 10;
+                i = 3;
+                left[4] = 0;
+            } else if (left[4] == left[5]) {
+                lb = 250;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a - 5, lb - 5, 15);
+                floodfill(a - 5, lb - 55, 15);
+                score = score + 10;
+                i = 4;
+                left[5] = 0;
+            } else
+                p = 0;
+
+            // Loop Breaking Condition For Left Side
+            if (lb < 200)
+                break;
+
+        } else if (z == 'r') { // Operations For Place The Bricks In Right Side
+            settextstyle(8, 0, 1);
+            outtextxy(500, 5, "Right Sub-Box");
+            rectangle(a + 75, b, c + 75, d);
+            floodfill(a + 55, d - 5, 15);
+            delay(200);
+            setfillstyle(SOLID_FILL, BLACK);
+            floodfill(a + 55, d - 5, 15);
+            rectangle(a + 50, rb - 50, c + 50, rb);
+            setfillstyle(SOLID_FILL, x);
+            floodfill(a + 55, rb - 5, 15);
+            delay(200);
+
+            // Decreasing The Base Of Right Side
+            rb = rb - 50;
+
+            // Storing Corresponding Color In Right[] Array
+            right[j] = x;
+            j++;
+
+            // Process to Check Is There Any Matching In The Right Side By Upside Down
+            if (right[0] == right[1]) {
+                rb = 450;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 55, rb - 5, 15);
+                floodfill(a + 55, rb - 55, 15);
+                score = score + 10;
+                j = 0;
+                right[1] = 0;
+            } else if (right[1] == right[2]) {
+                rb = 400;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 55, rb - 5, 15);
+                floodfill(a + 55, rb - 55, 15);
+                score = score + 10;
+                j = 1;
+                right[2] = 0;
+            } else if (right[2] == right[3]) {
+                rb = 350;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 55, rb - 5, 15);
+                floodfill(a + 55, rb - 55, 15);
+                score = score + 10;
+                j = 2;
+                right[3] = 0;
+            } else if (right[3] == right[4]) {
+                rb = 300;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 55, rb - 5, 15);
+                floodfill(a + 55, rb - 55, 15);
+                score = score + 10;
+                j = 3;
+                right[4] = 0;
+            } else if (right[4] == right[5]) {
+                rb = 250;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 55, rb - 5, 15);
+                floodfill(a + 55, rb - 55, 15);
+                score = score + 10;
+                j = 4;
+                right[5] = 0;
+            } else
+                p = 0;
+
+            // Loop Breaking Condition For Right Side
+            if (rb - 50 < 150)
+                break;
+
+        } else { // Operations For Place The Bricks In Middle Side
+            rectangle(a, mb - 50, c, mb);
+            floodfill(a + 5, mb - 5, 15);
+            delay(200);
+
+            // Decreasing The Base Of Middle Side
+            mb = mb - 50;
+
+            // Storing Corresponding Color In Mid[] Array
+            mid[k] = x;
+            k++;
+
+            // Process To Check Is There Any Matching In The Middle Side By Upside Down
+            if (mid[0] == mid[1]) {
+                mb = 450;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 5, mb - 5, 15);
+                floodfill(a + 5, mb - 55, 15);
+                score = score + 10;
+                k = 0;
+                mid[1] = 0;
+            } else if (mid[1] == mid[2]) {
+                mb = 400;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 5, mb - 5, 15);
+                floodfill(a + 5, mb - 55, 15);
+                score = score + 10;
+                k = 1;
+                mid[2] = 0;
+            } else if (mid[2] == mid[3]) {
+                mb = 350;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 5, mb - 5, 15);
+                floodfill(a + 5, mb - 55, 15);
+                score = score + 10;
+                k = 2;
+                mid[3] = 0;
+            } else if (mid[3] == mid[4]) {
+                mb = 300;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 5, mb - 5, 15);
+                floodfill(a + 5, mb - 55, 15);
+                score = score + 10;
+                k = 3;
+                mid[4] = 0;
+            } else if (mid[4] == mid[5]) {
+                mb = 250;
+                setfillstyle(SOLID_FILL, BLACK);
+                floodfill(a + 5, mb - 5, 15);
+                floodfill(a + 5, mb - 55, 15);
+                score = score + 10;
+                k = 4;
+                mid[5] = 0;
+            } else
+                p = 0;
+
+            // Loop Breaking Condition For Middle Side
+            if (mb - 50 < 150)
+                break;
+        }
+
+        // Time Delay
+        delay(200);
+
+        // Display Score Whenever There Is Any Match
+        sprintf(str, "%d", score);
+        outtextxy(50, 300, "SCORE: ");
+        outtextxy(50, 350, str);
+    }
+
+    // Time Delay
+    delay(500);
+
+    // Clearing The Screen When Game Is Over
+    cleardevice();
+
+    // Holding screen for a while
+    getch();
+
+    // Close the initialized gdriver
+    closegraph();
+    return 0;
+}
